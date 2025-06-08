@@ -1,0 +1,71 @@
+<div class="entries-container">
+  <div class="entries-header">
+    <button class="back-button" (click)="goBack()">
+      <i class="back-icon">←</i>
+      Back to Profiles
+    </button>
+    <h1>Configuration Entries</h1>
+    <p class="subtitle">{{serviceName}} - {{profileName}}</p>
+  </div>
+
+  <div class="entries-content" *ngIf="!loading && !error">
+    <form (ngSubmit)="onSubmit()" #entriesForm="ngForm">
+      <div class="entries-list">
+        <div class="entry-item" *ngFor="let entry of entries; let i = index">
+          <div class="entry-inputs">
+            <div class="input-group">
+              <label for="key-{{i}}">Key</label>
+              <input 
+                type="text" 
+                id="key-{{i}}" 
+                [(ngModel)]="entry.key" 
+                name="key-{{i}}"
+                placeholder="Enter key"
+                required>
+            </div>
+            <div class="input-group">
+              <label for="value-{{i}}">Value</label>
+              <textarea 
+                id="value-{{i}}" 
+                [(ngModel)]="entry.value" 
+                name="value-{{i}}"
+                placeholder="Enter value"
+                autoResize></textarea>
+            </div>
+          </div>
+          <button 
+            type="button" 
+            class="remove-button"
+            (click)="removeEntry(i)"
+            *ngIf="entries.length > 1">
+            <i class="remove-icon">×</i>
+          </button>
+        </div>
+      </div>
+
+      <div class="entries-actions">
+        <button 
+          type="button" 
+          class="add-entry-button"
+          (click)="addNewEntry()">
+          <i class="add-icon">+</i>
+          Add New Entry
+        </button>
+        <button 
+          type="submit" 
+          class="submit-button"
+          [disabled]="!entriesForm.form.valid || isSubmitting">
+          {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Loading entries...
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+</div> 

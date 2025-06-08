@@ -1,0 +1,49 @@
+<div class="service-details-container">
+  <div class="service-header">
+    <button class="back-button" (click)="goBack()">
+      <span class="back-icon">←</span> Back to Dashboard
+    </button>
+    <h1>Service Details</h1>
+  </div>
+
+  <div class="service-content" *ngIf="!isLoading && service">
+    <div class="service-info">
+      <div class="info-group">
+        <label>Name:</label>
+        <span>{{ service.name }}</span>
+      </div>
+      <div class="info-group">
+        <label>Description:</label>
+        <p>{{ service.description }}</p>
+      </div>
+      <div class="info-group">
+        <label>Visibility:</label>
+        <span class="visibility-badge" [class.public]="service.publicVisible">
+          {{ service.publicVisible ? 'Public' : 'Private' }}
+        </span>
+      </div>
+      <div class="info-group">
+        <label>Created:</label>
+        <span>{{ service.createdAt | date:'medium' }}</span>
+      </div>
+      <div class="info-group">
+        <label>Last Updated:</label>
+        <span>{{ service.updatedAt | date:'medium' }}</span>
+      </div>
+    </div>
+
+    <div class="service-actions">
+      <button class="view-profiles-button" (click)="viewProfiles()">
+        View Profiles
+      </button>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    Loading service details...
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+</div> 

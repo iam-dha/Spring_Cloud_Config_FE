@@ -1,0 +1,145 @@
+<div class="service-profile-container">
+  <div *ngIf="notification" class="profile-notification">{{ notification }}</div>
+  <div class="profile-header">
+    <button class="back-button" (click)="goBack()">
+      <span class="back-icon">←</span> Back to Service
+    </button>
+    <h1>Profiles for {{ serviceName }}</h1>
+    <button class="create-profile-button" (click)="openCreateProfileModal()">
+      <span class="plus-icon">+</span> Create Profile
+    </button>
+  </div>
+
+  <div class="profile-content" *ngIf="!isLoading && profiles.length > 0">
+    <div class="profile-grid">
+      <div class="profile-card" *ngFor="let profile of profiles" (click)="viewProfileDetails(profile)">
+        <svg class="folder-svg" width="100%" height="210" viewBox="0 0 420 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="56" width="388" height="140" rx="24" stroke="#3ecb8f" stroke-width="6" fill="#fff"/>
+          <path d="M44 56V24C44 15 52 7 61 7H260C269 7 277 15 277 24V56" stroke="#3ecb8f" stroke-width="6" fill="#fff"/>
+        </svg>
+        <div class="folder-tab-label">
+          <span class="folder-name" title="{{ profile.name }}">{{ profile.name }}</span>
+        </div>
+        <button class="folder-link-btn-abs" type="button" aria-label="Open link"
+          (click)="saveApiUrl(profile, $event)">
+          <img src="assets/linkicon.png" alt="Link" class="folder-link-icon" />
+        </button>
+        <div class="profile-folder-content">
+          <div class="profile-meta">
+            <span class="date-info" *ngIf="profile.addedAt">
+              Added at: {{ profile.addedAt | date:'medium' }}
+            </span>
+            <br *ngIf="profile.addedAt && profile.updatedAt"/>
+            <span class="date-info" *ngIf="profile.updatedAt">
+              Last updated: {{ profile.updatedAt | date:'medium' }}
+            </span>
+          </div>
+          <div class="profile-actions">
+            <button class="edit-button" (click)="openEditModal(profile); $event.stopPropagation()">Edit</button>
+            <button class="delete-button" (click)="confirmDelete(profile); $event.stopPropagation()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-profiles" *ngIf="!isLoading && profiles.length === 0">
+    <p>No profiles found for this service.</p>
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    Loading profiles...
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Create Profile Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Create New Profile</h3>
+      <form (ngSubmit)="createProfile()">
+        <div class="form-group">
+          <label for="profileName">Profile Name:</label>
+          <input 
+            type="text" 
+            id="profileName" 
+            [(ngModel)]="newProfile.name" 
+            name="profileName" 
+            placeholder="Enter profile name"
+            required>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="submit-button" [disabled]="isLoading">
+            {{ isLoading ? 'Creating...' : 'Create Profile' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" *ngIf="showDeleteModal">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Delete Profile</h3>
+      <p>Are you sure you want to delete profile "{{ profileToDelete?.name }}"?</p>
+      <p class="warning-text">This action cannot be undone.</p>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-button" (click)="closeDeleteModal()">Cancel</button>
+        <button type="button" class="delete-confirm-button" (click)="deleteProfile()" [disabled]="isLoading">
+          {{ isLoading ? 'Deleting...' : 'Delete Profile' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal" *ngIf="showEditModal">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Edit Profile</h3>
+      <form (ngSubmit)="updateProfile()">
+        <div class="form-group">
+          <label for="oldName">Current Name:</label>
+          <input 
+            type="text" 
+            id="oldName" 
+            [value]="profileToEdit?.name"
+            disabled>
+        </div>
+        <div class="form-group">
+          <label for="newName">New Name:</label>
+          <input 
+            type="text" 
+            id="newName" 
+            [(ngModel)]="newProfileName" 
+            name="newName" 
+            placeholder="Enter new profile name"
+            required>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-button" (click)="closeEditModal()">Cancel</button>
+          <button type="submit" class="submit-button" [disabled]="isLoading">
+            {{ isLoading ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

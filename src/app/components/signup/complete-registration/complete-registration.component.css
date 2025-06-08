@@ -1,0 +1,149 @@
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #fff;
+  padding: 20px;
+}
+
+.registration-card {
+  background: rgba(255,255,255,0.95);
+  border-radius: 18px 18px 60px 18px;
+  box-shadow: 0 8px 32px rgba(33, 144, 110, 0.18);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+app-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+app-logo img, .registration-logo img {
+  max-width: 120px;
+  height: auto;
+}
+
+h2 {
+  color: #21906e;
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.subtitle {
+  color: #3ecb8f;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+form {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  color: #21906e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-control {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+  background: #fafbfc;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #21906e;
+  background: #fff;
+}
+
+.form-control:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.submit-button {
+  width: 100%;
+  background: linear-gradient(120deg, #21906e 0%, #3ecb8f 100%);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(33, 144, 110, 0.12);
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(120deg, #1e7e5c 0%, #2ebd7f 100%);
+}
+
+.submit-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .registration-card {
+    padding: 20px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+  .form-control {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+.main-footer {
+  background: linear-gradient(120deg, #21906e 0%, #3ecb8f 100%);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+} 

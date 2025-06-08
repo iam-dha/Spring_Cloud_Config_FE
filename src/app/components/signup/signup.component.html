@@ -1,0 +1,58 @@
+<div class="page-container">
+  <main class="signup-container">
+    <div class="signup-box">
+      <app-logo></app-logo>
+      <div class="signup-header">
+        <h2>Create Account</h2>
+        <p>Enter your email and choose a username</p>
+      </div>
+      
+      <form (ngSubmit)="onSubmit()" class="signup-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Enter your email"
+            [class.error]="errorMessage"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Choose a username"
+            [class.error]="errorMessage"
+            required
+          />
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" [disabled]="isLoading" class="signup-button">
+          <span *ngIf="!isLoading">Continue</span>
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+        </button>
+
+        <div class="login-link">
+          Already have an account? <a routerLink="/login">Sign in</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 SPRING CLOUD CONFIG SYSTEM. All rights reserved.</p>
+    </div>
+  </footer>
+</div> 

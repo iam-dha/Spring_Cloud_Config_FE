@@ -1,0 +1,135 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(120deg, #21906e 0%, #3ecb8f 100%);
+  color: #fff;
+  padding: 1rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.header-logo {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(33, 144, 110, 0.08);
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-left .app-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+.header-left .subtitle {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 2px;
+  line-height: 1.1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-menu {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  background: #23272f;
+  color: #fff;
+  border-radius: 8px;
+  min-width: 200px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  z-index: 100;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: #333;
+}
+
+.external-icon {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #444;
+  margin: 0.5rem 0;
+}
+
+.logout {
+  color: #dc3545;
+}
+
+@media (max-width: 600px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+    height: auto;
+  }
+  .header-left {
+    gap: 0.5rem;
+  }
+  .header-logo {
+    height: 32px;
+    width: 32px;
+  }
+  .header-title-group .app-title {
+    font-size: 1rem;
+  }
+  .header-title-group .subtitle {
+    font-size: 0.8rem;
+  }
+} 

@@ -1,0 +1,22 @@
+<header class="main-header">
+  <div class="header-left">
+    <img src="assets/spring-cloud-logo.png" alt="Logo" class="header-logo" (click)="navigateToHomepage()" style="cursor: pointer;" />
+    <div class="header-title-group">
+      <span class="app-title">SPRING CLOUD CONFIG SYSTEM</span>
+      <span class="subtitle">BY DHA</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="user-menu" (click)="toggleMenu()" tabindex="0" (blur)="closeMenu()">
+      <img class="avatar" src="https://st.quantrimang.com/photos/image/2017/04/08/anh-dai-dien-FB-200.jpg" alt="User" />
+      <div class="dropdown" *ngIf="menuOpen">
+        <a class="dropdown-item" routerLink="/user/information">Tài khoản <span class="external-icon">⤤</span></a>
+        <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+        <a class="dropdown-item" href="#">Hỗ trợ <span class="external-icon">⤤</span></a>
+        <a class="dropdown-item" routerLink="/user/guideline">Hướng dẫn <span class="external-icon">⤤</span></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item logout" href="#" (click)="logout($event)">Đăng xuất</a>
+      </div>
+    </div>
+  </div>
+</header> 

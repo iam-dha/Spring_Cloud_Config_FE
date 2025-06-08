@@ -1,0 +1,83 @@
+<div class="service-folder-container">
+  <div class="service-folder-header">
+    <h2>Service Folders</h2>
+    <button class="add-folder-button" (click)="openModal()">
+      <span class="plus-icon">+</span> Add New Folder
+    </button>
+  </div>
+
+  <div class="folders-list">
+    <div class="folder-item" *ngFor="let folder of folders; let i = index" (click)="goToProfiles(folder, $event)">
+      <div class="folder-info">
+        <h3>{{ folder.name }}</h3>
+        <p>{{ folder.description }}</p>
+        <div class="folder-meta">
+          <span class="visibility-badge" [class.public]="folder.isPublic">
+            {{ folder.isPublic ? 'Public' : 'Private' }}
+          </span>
+          <span class="date-info" *ngIf="folder.updatedAt">
+            Last updated: {{ folder.updatedAt | date:'medium' }}
+          </span>
+        </div>
+      </div>
+      <div class="folder-actions">
+        <button class="view-button" (click)="viewServiceDetails(folder); $event.stopPropagation()">View Details</button>
+        <button class="edit-button" (click)="openEditModal(folder, i); $event.stopPropagation()">Edit</button>
+        <button class="delete-button" (click)="deleteFolder(i); $event.stopPropagation()">Delete</button>
+      </div>
+    </div>
+    <div class="no-folders" *ngIf="folders.length === 0">
+      No service folders created yet
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>{{ isEditing ? 'Edit Service Folder' : 'Create New Service Folder' }}</h3>
+      <form (ngSubmit)="submitForm()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input 
+            type="text" 
+            id="name" 
+            [(ngModel)]="formModel.name" 
+            name="name" 
+            placeholder="Enter folder name"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea 
+            id="description" 
+            [(ngModel)]="formModel.description" 
+            name="description" 
+            placeholder="Enter folder description"
+            required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="formModel.isPublic" 
+              name="isPublic">
+            Public
+          </label>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="submit-button" [disabled]="isLoading">
+            {{ isLoading ? 'Saving...' : (isEditing ? 'Save Changes' : 'Add Folder') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

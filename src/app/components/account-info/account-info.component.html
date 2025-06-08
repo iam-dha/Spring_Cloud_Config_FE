@@ -1,0 +1,25 @@
+<div class="account-info-container" *ngIf="!loading && user">
+  <div class="avatar-section">
+    <img [src]="user.avatarUrl" alt="Avatar" class="avatar-large" />
+    <h2>{{user.firstName}} {{user.lastName}}</h2>
+    <p class="account">&#64;{{user.account}}</p>
+  </div>
+  <div class="info-section">
+    <div><strong>Email:</strong> {{user.email}}</div>
+    <div><strong>Số điện thoại:</strong> {{user.phoneNumber}}</div>
+    <div><strong>Ngày sinh:</strong> {{user.birthDate}}</div>
+    <div><strong>Ngày tạo:</strong> {{user.createdAt | date:'medium'}}</div>
+    <div><strong>API Key:</strong> 
+      <span class="api-key">
+        <ng-container *ngIf="showApiKey; else hiddenApiKey">{{user.apiKey}}</ng-container>
+        <ng-template #hiddenApiKey>{{ '•'.repeat(user.apiKey?.length || 16) }}</ng-template>
+        <button class="api-key-toggle" (click)="toggleApiKey()" type="button" aria-label="Show/Hide API Key">
+          <span *ngIf="showApiKey; else showIcon">👁️‍🗨️</span>
+          <ng-template #showIcon>👁️</ng-template>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading" class="loading">Đang tải thông tin...</div>
+<div *ngIf="error" class="error-message">{{ error }}</div> 

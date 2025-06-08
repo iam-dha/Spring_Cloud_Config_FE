@@ -1,0 +1,74 @@
+<div class="guideline-container">
+  <button class="back-button" (click)="navigateToHomepage()">
+    <span class="back-icon">←</span> Back to Homepage
+  </button>
+  <h1>User Guide</h1>
+  <p>This guide will help you use the configuration system to integrate with Spring Cloud Config using your personal API Key.</p>
+
+  <div class="guideline-grid">
+    <section class="guideline-section">
+      <h2>1. Get your <code>Account</code> and <code>API Key</code></h2>
+      <p>After logging in at <a href="https://dhadev.com" target="_blank">https://dhadev.com</a>, follow these steps:</p>
+      <ol>
+        <li>Go to your <b>Account Settings</b> or <b>Profile Page</b></li>
+        <li>Find the <b>API Key</b> section</li>
+        <li>Copy the API key string as shown below:</li>
+      </ol>
+      <pre class="guideline-code">abcd1234-5678-90ef-ghij-klmnopqrstuv</pre>
+      <p>🔑 <i><b>Account</b> is your registered login name (e.g., <code>dha</code>) used in the configuration URL path.</i></p>
+    </section>
+
+    <section class="guideline-section">
+      <h2>2. Configure <code>bootstrap.yml</code> in your microservice</h2>
+      <p>To enable dynamic configuration loading via Spring Cloud Config, set up your <code>bootstrap.yml</code> like this:</p>
+      <pre class="guideline-code">
+spring:
+  application:
+    name: micro1           # Your service name
+  profiles:
+    active: dev            # Active profile
+  config:
+    import: "optional:configserver:http://dhadev.com"  # Remote config URI
+  cloud:
+    config:
+      import-check:
+        enabled: false
+      profile: dha         # Profile name
+      headers:
+        Authorization: Apikey abcd1234-5678-90ef-ghij-klmnopqrstuv
+      </pre>
+      <p>📌 This setup allows your application to fetch remote configuration files in JSON format from your custom Spring Cloud Config endpoint, with API key–based access control.</p>
+    </section>
+
+    <section class="guideline-section">
+      <h2>3. API Endpoint Structure</h2>
+      <p>Remote config is served from the following structure:</p>
+      <pre class="guideline-code">
+GET https://dhadev.com/{{ '{' }}serviceName{{ '}' }}/{{ '{' }}profileName{{ '}' }}
+      </pre>
+      <p>🔐 Make sure your request includes this HTTP header:</p>
+      <pre class="guideline-code">
+Authorization: Apikey YOUR_API_KEY
+      </pre>
+    </section>
+
+    <section class="guideline-section">
+      <h2>4. Example cURL Request</h2>
+      <p>Use this command to test your config endpoint manually:</p>
+      <pre class="guideline-code">
+curl -H "Authorization: Apikey abcd1234-5678-90ef-ghij-klmnopqrstuv" \
+  https://dhadev.com/bankingSystem/dha
+      </pre>
+    </section>
+
+    <section class="guideline-section">
+      <h2>5. Notes</h2>
+      <ul>
+        <li>Each <code>account</code> can manage multiple <code>services</code></li>
+        <li>Each <code>service</code> can have multiple <code>profiles</code></li>
+        <li>Each <code>profile</code> contains key-value <code>entries</code> used to build YAML config</li>
+        <li>Do not share your <b>API Key</b> with others</li>
+      </ul>
+    </section>
+  </div>
+</div>

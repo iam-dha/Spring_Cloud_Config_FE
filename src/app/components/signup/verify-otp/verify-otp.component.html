@@ -1,0 +1,47 @@
+<div class="page-container">
+  <main class="verify-otp-container">
+    <div class="verify-container">
+      <div class="verify-card">
+        <app-logo></app-logo>
+        <h2>Verify Your Email</h2>
+        <p>Enter the 6-digit code sent to {{email}}</p>
+      </div>
+      
+      <form (ngSubmit)="onSubmit()" class="verify-otp-form">
+        <div class="form-group">
+          <label for="otp">Verification Code</label>
+          <input
+            type="text"
+            id="otp"
+            [(ngModel)]="otp"
+            name="otp"
+            placeholder="Enter 6-digit code"
+            [class.error]="errorMessage"
+            maxlength="6"
+            pattern="[0-9]*"
+            required
+          />
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" [disabled]="isLoading" class="verify-button">
+          <span *ngIf="!isLoading">Verify</span>
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+        </button>
+
+        <div class="resend-link">
+          Didn't receive the code? <a (click)="resendOtp()" style="cursor: pointer;">Resend</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p>&copy; 2025 SPRING CLOUD CONFIG SYSTEM. All rights reserved.</p>
+    </div>
+  </footer>
+</div> 
