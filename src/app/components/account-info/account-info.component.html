@@ -21,5 +21,20 @@
     </div>
   </div>
 </div>
-<div *ngIf="loading" class="loading">Đang tải thông tin...</div>
+
+<div class="account-info-container skeleton-container" *ngIf="loading">
+  <div class="avatar-section">
+    <div class="skeleton-avatar"></div>
+    <div class="skeleton-name"></div>
+    <div class="skeleton-account"></div>
+  </div>
+  <div class="info-section">
+    <div class="skeleton-info-row"></div>
+    <div class="skeleton-info-row"></div>
+    <div class="skeleton-info-row"></div>
+    <div class="skeleton-info-row"></div>
+    <div class="skeleton-info-row"></div>
+  </div>
+</div>
+
 <div *ngIf="error" class="error-message">{{ error }}</div> 

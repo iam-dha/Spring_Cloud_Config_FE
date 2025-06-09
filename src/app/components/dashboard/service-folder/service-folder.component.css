@@ -271,4 +271,140 @@
     width: 95%;
     margin: 10px;
   }
+}
+
+/* Skeleton Loading Styles */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-folder {
+  cursor: default;
+  pointer-events: none;
+}
+
+.skeleton-folder:hover {
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-description {
+  height: 1rem;
+  width: 80%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-badge {
+  height: 1.25rem;
+  width: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-date {
+  height: 1rem;
+  width: 120px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-button {
+  height: 2rem;
+  width: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .skeleton-folder {
+    flex-direction: column;
+  }
+
+  .skeleton-folder .folder-actions {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .skeleton-button {
+    width: 70px;
+  }
+}
+
+.delete-modal {
+  max-width: 400px;
+  text-align: center;
+}
+
+.delete-message {
+  color: #666;
+  margin: 1.5rem 0;
+  line-height: 1.5;
+}
+
+.delete-modal .modal-actions {
+  justify-content: center;
+  gap: 1rem;
+}
+
+.delete-modal .delete-button {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-modal .delete-button:hover {
+  background-color: #b91c1c;
+}
+
+.delete-modal .delete-button:disabled {
+  background-color: #fecaca;
+  cursor: not-allowed;
+}
+
+.delete-modal .cancel-button {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-modal .cancel-button:hover {
+  background-color: #e5e7eb;
 } 

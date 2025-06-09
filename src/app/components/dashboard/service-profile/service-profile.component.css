@@ -505,4 +505,63 @@
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* Skeleton Loading Styles */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-profile {
+  cursor: default;
+  pointer-events: none;
+}
+
+.skeleton-profile:hover .folder-svg rect,
+.skeleton-profile:hover .folder-svg path {
+  stroke: #e0e0e0;
+  filter: none;
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-date {
+  height: 1rem;
+  width: 180px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-button {
+  height: 2rem;
+  width: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .skeleton-profile {
+    min-width: 100%;
+  }
+
+  .skeleton-button {
+    width: 70px;
+  }
 } 

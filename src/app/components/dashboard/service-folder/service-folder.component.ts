@@ -13,6 +13,12 @@ interface ServiceFolder {
   createdAt?: string;
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  desc?: string;
+  data?: T;
+}
+
 @Component({
   selector: 'app-service-folder',
   standalone: true,
@@ -30,6 +36,8 @@ export class ServiceFolderComponent implements OnInit {
   errorMessage: string = '';
   isLoading: boolean = false;
   showModal: boolean = false;
+  showDeleteModal: boolean = false;
+  folderToDelete: ServiceFolder | null = null;
   isEditing: boolean = false;
   editingIndex: number = -1;
 
@@ -43,6 +51,7 @@ export class ServiceFolderComponent implements OnInit {
   }
 
   fetchFolders() {
+    this.isLoading = true;
     this.apiService.getServices().subscribe({
       next: (response) => {
         if (response.success && response.data) {
@@ -57,9 +66,11 @@ export class ServiceFolderComponent implements OnInit {
         } else {
           this.errorMessage = response.desc || 'Failed to fetch services';
         }
+        this.isLoading = false;
       },
       error: (error) => {
         this.errorMessage = error.error?.desc || 'Failed to fetch services';
+        this.isLoading = false;
       }
     });
   }
@@ -121,7 +132,7 @@ export class ServiceFolderComponent implements OnInit {
           publicVisible: this.formModel.isPublic.toString()
         }
       ).subscribe({
-        next: (response) => {
+        next: (response: ApiResponse<any>) => {
           if (response.success) {
             this.fetchFolders();
             this.closeModal();
@@ -130,23 +141,23 @@ export class ServiceFolderComponent implements OnInit {
           }
           this.isLoading = false;
         },
-        error: (error) => {
+        error: (error: { error?: { desc?: string } }) => {
           this.errorMessage = error.error?.desc || 'Failed to update service';
           this.isLoading = false;
         }
       });
     } else {
       this.apiService.createService(serviceData).subscribe({
-        next: (response) => {
+        next: (response: ApiResponse<any>) => {
           if (response.success) {
-            this.fetchFolders(); // Refresh the list
+            this.fetchFolders();
             this.closeModal();
           } else {
             this.errorMessage = response.desc || 'Failed to create service';
           }
           this.isLoading = false;
         },
-        error: (error) => {
+        error: (error: { error?: { desc?: string } }) => {
           this.errorMessage = error.error?.desc || 'Failed to create service';
           this.isLoading = false;
         }
@@ -154,8 +165,36 @@ export class ServiceFolderComponent implements OnInit {
     }
   }
 
-  deleteFolder(index: number) {
-    this.folders.splice(index, 1);
+  deleteFolder(folder: ServiceFolder) {
+    this.folderToDelete = folder;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.folderToDelete = null;
+    this.errorMessage = '';
+  }
+
+  confirmDelete() {
+    if (!this.folderToDelete) return;
+
+    this.isLoading = true;
+    this.apiService.deleteService(this.folderToDelete.name).subscribe({
+      next: (response: ApiResponse<any>) => {
+        if (response.success) {
+          this.fetchFolders();
+          this.closeDeleteModal();
+        } else {
+          this.errorMessage = response.desc || 'Failed to delete service';
+        }
+        this.isLoading = false;
+      },
+      error: (error: { error?: { desc?: string } }) => {
+        this.errorMessage = error.error?.desc || 'Failed to delete service';
+        this.isLoading = false;
+      }
+    });
   }
 
   viewServiceDetails(folder: ServiceFolder) {

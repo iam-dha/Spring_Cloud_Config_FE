@@ -9,6 +9,7 @@ import { ServiceEntriesComponent } from './components/dashboard/service-entries/
 import { AccountInfoComponent } from './components/account-info/account-info.component';
 import { GuidelineComponent } from './components/guideline/guideline.component';
 import { VerifyOtpComponent } from './components/signup/verify-otp/verify-otp.component';
+import { SupportComponent } from './components/support/support.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,7 +23,13 @@ export const routes: Routes = [
   { path: 'config/:serviceName/profiles', component: ServiceProfileComponent },
   { path: 'config/:serviceName/profiles/:profileName/entries', component: ServiceEntriesComponent },
   { path: 'account', component: AccountInfoComponent },
-  { path: 'user/information', component: AccountInfoComponent },
-  { path: 'user/guideline', component: GuidelineComponent },
+  {
+    path: 'user',
+    children: [
+      { path: 'information', component: AccountInfoComponent },
+      { path: 'guideline', component: GuidelineComponent },
+      { path: 'support', component: SupportComponent }
+    ]
+  },
   { path: '**', redirectTo: '/login' }
 ];

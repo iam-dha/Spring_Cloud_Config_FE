@@ -8,27 +8,43 @@
 
   <div class="service-content" *ngIf="!isLoading && service">
     <div class="service-info">
-      <div class="info-group">
-        <label>Name:</label>
+      <div class="info-group name-group">
+        <label>Name</label>
         <span>{{ service.name }}</span>
       </div>
-      <div class="info-group">
-        <label>Description:</label>
+
+      <div class="info-group description-group">
+        <label>Description</label>
         <p>{{ service.description }}</p>
       </div>
-      <div class="info-group">
-        <label>Visibility:</label>
-        <span class="visibility-badge" [class.public]="service.publicVisible">
-          {{ service.publicVisible ? 'Public' : 'Private' }}
+
+      <div class="info-group visibility-group">
+        <label>Visibility</label>
+        <span class="visibility-badge" 
+              [class.private]="!service.publicVisible && !service.restricted"
+              [class.restricted]="service.restricted"
+              [class.public]="service.publicVisible">
+          {{ service.publicVisible ? 'Public' : (service.restricted ? 'Restricted' : 'Private') }}
         </span>
       </div>
-      <div class="info-group">
-        <label>Created:</label>
-        <span>{{ service.createdAt | date:'medium' }}</span>
-      </div>
-      <div class="info-group">
-        <label>Last Updated:</label>
-        <span>{{ service.updatedAt | date:'medium' }}</span>
+
+      <div class="info-group timestamp-group">
+        <div class="timestamp-container">
+          <div class="timestamp-item">
+            <label class="timestamp-tooltip" data-tooltip="Date and time when the service was created">
+              <i class="clock-icon">🕒</i>
+              Created
+            </label>
+            <span>{{ service.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="timestamp-item">
+            <label class="timestamp-tooltip" data-tooltip="Date and time of the last update">
+              <i class="clock-icon">🕒</i>
+              Last Updated
+            </label>
+            <span>{{ service.updatedAt | date:'medium' }}</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -39,8 +55,35 @@
     </div>
   </div>
 
-  <div class="loading" *ngIf="isLoading">
-    Loading service details...
+  <div class="skeleton-container" *ngIf="isLoading">
+    <div class="skeleton-group name-group">
+      <div class="skeleton skeleton-label"></div>
+      <div class="skeleton skeleton-text" style="width: 60%"></div>
+    </div>
+
+    <div class="skeleton-group description-group">
+      <div class="skeleton skeleton-label"></div>
+      <div class="skeleton skeleton-text"></div>
+      <div class="skeleton skeleton-text" style="width: 80%"></div>
+    </div>
+
+    <div class="skeleton-group visibility-group">
+      <div class="skeleton skeleton-label"></div>
+      <div class="skeleton skeleton-badge" style="width: 100px"></div>
+    </div>
+
+    <div class="skeleton-group timestamp-group">
+      <div class="timestamp-container">
+        <div class="timestamp-item">
+          <div class="skeleton skeleton-label" style="width: 120px"></div>
+          <div class="skeleton skeleton-text" style="width: 200px"></div>
+        </div>
+        <div class="timestamp-item">
+          <div class="skeleton skeleton-label" style="width: 120px"></div>
+          <div class="skeleton skeleton-text" style="width: 200px"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="error-message" *ngIf="errorMessage">

@@ -8,6 +8,7 @@ interface ServiceDetails {
   name: string;
   description: string;
   publicVisible: boolean;
+  restricted: boolean;
   updatedAt: string;
   createdAt: string;
 }

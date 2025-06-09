@@ -10,12 +10,11 @@
     <div class="user-menu" (click)="toggleMenu()" tabindex="0" (blur)="closeMenu()">
       <img class="avatar" src="https://st.quantrimang.com/photos/image/2017/04/08/anh-dai-dien-FB-200.jpg" alt="User" />
       <div class="dropdown" *ngIf="menuOpen">
-        <a class="dropdown-item" routerLink="/user/information">Tài khoản <span class="external-icon">⤤</span></a>
-        <a class="dropdown-item" href="#">Đổi mật khẩu</a>
-        <a class="dropdown-item" href="#">Hỗ trợ <span class="external-icon">⤤</span></a>
-        <a class="dropdown-item" routerLink="/user/guideline">Hướng dẫn <span class="external-icon">⤤</span></a>
+        <a class="dropdown-item" routerLink="/user/information">Account <span class="external-icon">⤤</span></a>
+        <a class="dropdown-item" routerLink="/user/support">Support <span class="external-icon">⤤</span></a>
+        <a class="dropdown-item" routerLink="/user/guideline">Guideline <span class="external-icon">⤤</span></a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item logout" href="#" (click)="logout($event)">Đăng xuất</a>
+        <a class="dropdown-item logout" href="#" (click)="logout($event)">Logout</a>
       </div>
     </div>
   </div>

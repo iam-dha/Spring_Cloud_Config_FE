@@ -7,31 +7,67 @@
   </div>
 
   <div class="folders-list">
-    <div class="folder-item" *ngFor="let folder of folders; let i = index" (click)="goToProfiles(folder, $event)">
-      <div class="folder-info">
-        <h3>{{ folder.name }}</h3>
-        <p>{{ folder.description }}</p>
-        <div class="folder-meta">
-          <span class="visibility-badge" [class.public]="folder.isPublic">
-            {{ folder.isPublic ? 'Public' : 'Private' }}
-          </span>
-          <span class="date-info" *ngIf="folder.updatedAt">
-            Last updated: {{ folder.updatedAt | date:'medium' }}
-          </span>
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <div class="folder-item" *ngFor="let folder of folders; let i = index" (click)="goToProfiles(folder, $event)">
+        <div class="folder-info">
+          <h3>{{ folder.name }}</h3>
+          <p>{{ folder.description }}</p>
+          <div class="folder-meta">
+            <span class="visibility-badge" [class.public]="folder.isPublic">
+              {{ folder.isPublic ? 'Public' : 'Private' }}
+            </span>
+            <span class="date-info" *ngIf="folder.updatedAt">
+              Last updated: {{ folder.updatedAt | date:'medium' }}
+            </span>
+          </div>
+        </div>
+        <div class="folder-actions">
+          <button class="view-button" (click)="viewServiceDetails(folder); $event.stopPropagation()">View Details</button>
+          <button class="edit-button" (click)="openEditModal(folder, i); $event.stopPropagation()">Edit</button>
+          <button class="delete-button" (click)="deleteFolder(folder); $event.stopPropagation()">Delete</button>
         </div>
       </div>
-      <div class="folder-actions">
-        <button class="view-button" (click)="viewServiceDetails(folder); $event.stopPropagation()">View Details</button>
-        <button class="edit-button" (click)="openEditModal(folder, i); $event.stopPropagation()">Edit</button>
-        <button class="delete-button" (click)="deleteFolder(i); $event.stopPropagation()">Delete</button>
+
+      <div class="no-folders" *ngIf="folders.length === 0">
+        No service folders created yet
       </div>
-    </div>
-    <div class="no-folders" *ngIf="folders.length === 0">
-      No service folders created yet
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="folder-item skeleton-folder" *ngFor="let i of [1,2,3]">
+        <div class="folder-info">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-description"></div>
+          <div class="folder-meta">
+            <div class="skeleton-badge"></div>
+            <div class="skeleton-date"></div>
+          </div>
+        </div>
+        <div class="folder-actions">
+          <div class="skeleton-button"></div>
+          <div class="skeleton-button"></div>
+          <div class="skeleton-button"></div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" *ngIf="showDeleteModal">
+    <div class="modal-content delete-modal" (click)="$event.stopPropagation()">
+      <h3>Delete Service Folder</h3>
+      <p class="delete-message">Are you sure you want to delete "{{ folderToDelete?.name }}"? This action cannot be undone.</p>
+      
+      <div class="modal-actions">
+        <button type="button" class="cancel-button" (click)="closeDeleteModal()">Cancel</button>
+        <button type="button" class="delete-button" (click)="confirmDelete()" [disabled]="isLoading">
+          {{ isLoading ? 'Deleting...' : 'Delete' }}
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Existing Modal -->
   <div class="modal" *ngIf="showModal">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <h3>{{ isEditing ? 'Edit Service Folder' : 'Create New Service Folder' }}</h3>

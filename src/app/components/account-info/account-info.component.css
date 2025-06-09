@@ -69,4 +69,76 @@
 
 .api-key-toggle:active {
   color: #1976D2;
+}
+
+/* Skeleton Loading Styles */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-container {
+  pointer-events: none;
+}
+
+.skeleton-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  margin: 0 auto 1rem;
+}
+
+.skeleton-name {
+  height: 1.5rem;
+  width: 60%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin: 0 auto 0.5rem;
+}
+
+.skeleton-account {
+  height: 1.2rem;
+  width: 40%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.skeleton-info-row {
+  height: 1.2rem;
+  width: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-info-row:last-child {
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  .skeleton-name {
+    width: 80%;
+  }
+
+  .skeleton-account {
+    width: 60%;
+  }
+
+  .skeleton-info-row:last-child {
+    width: 90%;
+  }
 } 

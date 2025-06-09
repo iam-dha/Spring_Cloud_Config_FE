@@ -2,6 +2,8 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
 .service-header {
@@ -9,6 +11,10 @@
   align-items: center;
   gap: 2rem;
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .back-button {
@@ -44,77 +50,201 @@
 
 .service-content {
   background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .service-content:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
 }
 
 .service-info {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 
 .info-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 1.75rem;
   background: #f8f9fa;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .info-group:hover {
   background: #f0f2f5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
 .info-group label {
-  color: #666;
-  font-weight: 500;
-  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
 }
 
 .info-group span {
-  color: #333;
+  color: #1e293b;
   font-size: 1.1rem;
   font-weight: 500;
+  line-height: 1.5;
 }
 
 .info-group p {
   margin: 0;
-  color: #333;
+  color: #1e293b;
   line-height: 1.6;
   font-size: 1rem;
 }
 
-.visibility-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
+/* Specific styles for different info groups */
+.info-group.name-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.info-group.description-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.info-group.visibility-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.info-group.timestamp-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+/* Timestamp specific styles */
+.timestamp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.timestamp-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.timestamp-item label {
+  font-size: 0.75rem;
+  color: #94a3b8;
   font-weight: 500;
-  background: #dc3545;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.timestamp-item span {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.clock-icon {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.timestamp-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: help;
+}
+
+.timestamp-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0.75rem;
+  background: #1e293b;
   color: white;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 10;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timestamp-tooltip:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: #1e293b transparent transparent transparent;
+}
+
+.visibility-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   transition: all 0.3s ease;
+  border: 1px solid;
+  background: transparent;
+}
+
+.visibility-badge.private {
+  color: #b91c1c;
+  border-color: #fecaca;
+  background-color: #fef2f2;
+}
+
+.visibility-badge.restricted {
+  color: #b45309;
+  border-color: #fef3c7;
+  background-color: #fffbeb;
 }
 
 .visibility-badge.public {
-  background: #28a745;
+  color: #047857;
+  border-color: #a7f3d0;
+  background-color: #ecfdf5;
 }
 
 .visibility-badge:hover {
-  transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.visibility-badge.private:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.visibility-badge.restricted:hover {
+  background-color: #fef3c7;
+  border-color: #fcd34d;
+}
+
+.visibility-badge.public:hover {
+  background-color: #d1fae5;
+  border-color: #34d399;
 }
 
 .service-actions {
@@ -169,6 +299,74 @@
   margin-top: 1rem;
   font-weight: 500;
   box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+}
+
+/* Skeleton Loading Styles */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-label {
+  height: 0.75rem;
+  width: 80px;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-text {
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-badge {
+  height: 1.75rem;
+  border-radius: 20px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-container {
+  padding: 2.5rem;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.skeleton-group {
+  margin-bottom: 2rem;
+  padding: 1.75rem;
+  background: #f8f9fa;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.skeleton-group:last-child {
+  margin-bottom: 0;
+}
+
+.skeleton-group.name-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.skeleton-group.description-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.skeleton-group.visibility-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
+}
+
+.skeleton-group.timestamp-group {
+  background: linear-gradient(to right, #f8f9fa, #f1f5f9);
 }
 
 @media (max-width: 768px) {

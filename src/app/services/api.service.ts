@@ -245,4 +245,10 @@ export class ApiService {
       headers: this.getHeaders()
     });
   }
+
+  deleteService(serviceName: string): Observable<ApiResponse<any>> {
+    return this.http.delete<ApiResponse<any>>(`${this.baseUrl}/config/services/${serviceName}`, {
+      headers: this.getHeaders()
+    });
+  }
 }

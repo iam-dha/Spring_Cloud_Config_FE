@@ -43,12 +43,32 @@
     </div>
   </div>
 
-  <div class="no-profiles" *ngIf="!isLoading && profiles.length === 0">
-    <p>No profiles found for this service.</p>
+  <div class="profile-content" *ngIf="isLoading">
+    <div class="profile-grid">
+      <div class="profile-card skeleton-profile" *ngFor="let i of [1,2,3]">
+        <svg class="folder-svg" width="100%" height="210" viewBox="0 0 420 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="56" width="388" height="140" rx="24" stroke="#e0e0e0" stroke-width="6" fill="#fff"/>
+          <path d="M44 56V24C44 15 52 7 61 7H260C269 7 277 15 277 24V56" stroke="#e0e0e0" stroke-width="6" fill="#fff"/>
+        </svg>
+        <div class="folder-tab-label">
+          <div class="skeleton-title"></div>
+        </div>
+        <div class="profile-folder-content">
+          <div class="profile-meta">
+            <div class="skeleton-date"></div>
+            <div class="skeleton-date"></div>
+          </div>
+          <div class="profile-actions">
+            <div class="skeleton-button"></div>
+            <div class="skeleton-button"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="loading" *ngIf="isLoading">
-    Loading profiles...
+  <div class="no-profiles" *ngIf="!isLoading && profiles.length === 0">
+    <p>No profiles found for this service.</p>
   </div>
 
   <div class="error-message" *ngIf="errorMessage">
