@@ -215,7 +215,7 @@ export class ServiceProfileComponent implements OnInit {
       this.errorMessage = 'Account information not found. Please log in again.';
       return;
     }
-    const baseUrl = 'http://localhost:8080';
+    const baseUrl = 'http://54.226.168.204:8080';
     const apiUrl = `${baseUrl}/${this.serviceName}/${profile.name}`;
     localStorage.setItem('lastApiUrl', apiUrl);
     // Copy to clipboard

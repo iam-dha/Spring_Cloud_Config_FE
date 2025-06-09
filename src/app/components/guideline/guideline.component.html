@@ -28,7 +28,7 @@ spring:
   profiles:
     active: dev            # Active profile
   config:
-    import: "optional:configserver:http://dhadev.com"  # Remote config URI
+    import: "optional:configserver:http://54.226.168.204:8080"  # Remote config URI
   cloud:
     config:
       import-check:
@@ -44,7 +44,7 @@ spring:
       <h2>3. API Endpoint Structure</h2>
       <p>Remote config is served from the following structure:</p>
       <pre class="guideline-code">
-GET https://dhadev.com/{{ '{' }}serviceName{{ '}' }}/{{ '{' }}profileName{{ '}' }}
+GET http://54.226.168.204:8080/{{ '{' }}serviceName{{ '}' }}/{{ '{' }}profileName{{ '}' }}
       </pre>
       <p>🔐 Make sure your request includes this HTTP header:</p>
       <pre class="guideline-code">
@@ -57,7 +57,7 @@ Authorization: Apikey YOUR_API_KEY
       <p>Use this command to test your config endpoint manually:</p>
       <pre class="guideline-code">
 curl -H "Authorization: Apikey abcd1234-5678-90ef-ghij-klmnopqrstuv" \
-  https://dhadev.com/bankingSystem/dha
+  https://54.226.168.204:8080/bankingSystem/dha
       </pre>
     </section>
 
