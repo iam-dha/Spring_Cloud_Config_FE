@@ -215,7 +215,7 @@ export class ServiceProfileComponent implements OnInit {
       this.errorMessage = 'Account information not found. Please log in again.';
       return;
     }
-    const baseUrl = 'http://54.87.12.126:8080';
+    const baseUrl = 'https://api.dhadev.com';
     const apiUrl = `${baseUrl}/${this.serviceName}/${profile.name}`;
     localStorage.setItem('lastApiUrl', apiUrl);
     // Copy to clipboard

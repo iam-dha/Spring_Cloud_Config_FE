@@ -28,7 +28,7 @@ spring:
   profiles:
     active: dev            # Active profile
   config:
-    import: "optional:configserver:http://54.87.12.126:8080"  # Remote config URI
+    import: "optional:configserver:https://api.dhadev.com"  # Remote config URI
   cloud:
     config:
       import-check:
@@ -44,7 +44,7 @@ spring:
       <h2>3. API Endpoint Structure</h2>
       <p>Remote config is served from the following structure:</p>
       <pre class="guideline-code">
-GET http://54.87.12.126:8080/{{ '{' }}serviceName{{ '}' }}/{{ '{' }}profileName{{ '}' }}
+GET https://api.dhadev.com/{{ '{' }}serviceName{{ '}' }}/{{ '{' }}profileName{{ '}' }}
       </pre>
       <p>🔐 Make sure your request includes this HTTP header:</p>
       <pre class="guideline-code">
