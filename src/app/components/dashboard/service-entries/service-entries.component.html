@@ -8,64 +8,151 @@
     <p class="subtitle">{{serviceName}} - {{profileName}}</p>
   </div>
 
-  <div class="entries-content" *ngIf="!loading && !error">
-    <form (ngSubmit)="onSubmit()" #entriesForm="ngForm">
-      <div class="entries-list">
-        <div class="entry-item" *ngFor="let entry of entries; let i = index">
-          <div class="entry-inputs">
-            <div class="input-group">
-              <label for="key-{{i}}">Key</label>
-              <input 
-                type="text" 
-                id="key-{{i}}" 
-                [(ngModel)]="entry.key" 
-                name="key-{{i}}"
-                placeholder="Enter key"
-                required>
-            </div>
-            <div class="input-group">
-              <label for="value-{{i}}">Value</label>
-              <textarea 
-                id="value-{{i}}" 
-                [(ngModel)]="entry.value" 
-                name="value-{{i}}"
-                placeholder="Enter value"
-                autoResize></textarea>
+  <div class="entries-main">
+    <div class="entries-form-section">
+      <div class="entries-content" *ngIf="!loading && !error">
+        <form (ngSubmit)="onSubmit()" #entriesForm="ngForm">
+          <div class="entries-list">
+            <div class="entry-item" *ngFor="let entry of entries; let i = index">
+              <div class="entry-inputs">
+                <div class="input-group">
+                  <label for="key-{{i}}">Key</label>
+                  <input 
+                    type="text" 
+                    id="key-{{i}}" 
+                    [(ngModel)]="entry.key" 
+                    name="key-{{i}}"
+                    placeholder="Enter key"
+                    required>
+                </div>
+                <div class="input-group">
+                  <label for="value-{{i}}">Value</label>
+                  <textarea 
+                    id="value-{{i}}" 
+                    [(ngModel)]="entry.value" 
+                    name="value-{{i}}"
+                    placeholder="Enter value"
+                    autoResize></textarea>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                class="remove-button"
+                (click)="removeEntry(i)"
+                *ngIf="entries.length > 1">
+                <i class="remove-icon">×</i>
+              </button>
             </div>
           </div>
-          <button 
-            type="button" 
-            class="remove-button"
-            (click)="removeEntry(i)"
-            *ngIf="entries.length > 1">
-            <i class="remove-icon">×</i>
-          </button>
+
+          <div class="entries-actions">
+            <button 
+              type="button" 
+              class="add-entry-button"
+              (click)="addNewEntry()">
+              <i class="add-icon">+</i>
+              Add New Entry
+            </button>
+            <button 
+              type="submit" 
+              class="submit-button"
+              [disabled]="!entriesForm.form.valid || isSubmitting">
+              {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="entries-content loading-skeleton" *ngIf="loading">
+        <div class="skeleton-header">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-subtitle"></div>
+        </div>
+        <div class="skeleton-entries">
+          <div class="skeleton-entry" *ngFor="let i of [1,2,3]">
+            <div class="skeleton-input-group">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-input"></div>
+            </div>
+            <div class="skeleton-input-group">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-textarea"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skeleton-actions">
+          <div class="skeleton-button"></div>
+          <div class="skeleton-button"></div>
         </div>
       </div>
 
-      <div class="entries-actions">
-        <button 
-          type="button" 
-          class="add-entry-button"
-          (click)="addNewEntry()">
-          <i class="add-icon">+</i>
-          Add New Entry
-        </button>
-        <button 
-          type="submit" 
-          class="submit-button"
-          [disabled]="!entriesForm.form.valid || isSubmitting">
-          {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
-        </button>
+      <div class="error-message" *ngIf="error">
+        {{ error }}
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="entries-preview-section">
+      <div class="preview-header">
+        <div class="preview-title">Preview</div>
+        <div class="preview-controls" *ngIf="!loading">
+          <button 
+            class="preview-copy-button" 
+            *ngIf="entries.length"
+            (click)="displayFormat === 'key-value' ? copyKeyValueContent() : copyPreviewContent()"
+            [class.copied]="copySuccess">
+            <i class="copy-icon">{{ copySuccess ? '✓' : '📋' }}</i>
+            {{ copySuccess ? 'Copied!' : 'Copy' }}
+          </button>
+          <select class="format-selector" [(ngModel)]="displayFormat">
+            <option value="key-value">Key-Value</option>
+            <option value="json">JSON</option>
+            <option value="yaml">YAML</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="preview-table-container" *ngIf="entries.length && displayFormat === 'key-value' && !loading">
+        <table class="preview-table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of entries; let i = index">
+              <td>
+                <input 
+                  type="text" 
+                  class="table-input"
+                  [(ngModel)]="entry.key"
+                  (ngModelChange)="onEntryChange(i)"
+                  placeholder="Enter key">
+              </td>
+              <td>
+                <textarea 
+                  class="table-textarea"
+                  [(ngModel)]="entry.value"
+                  (ngModelChange)="onEntryChange(i)"
+                  placeholder="Enter value"
+                  autoResize></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="loading" *ngIf="loading">
-    Loading entries...
-  </div>
+      <div class="preview-formatted-container" *ngIf="entries.length && displayFormat !== 'key-value' && !loading">
+        <pre class="preview-formatted">{{getFormattedPreview()}}</pre>
+      </div>
 
-  <div class="error-message" *ngIf="error">
-    {{ error }}
+      <div class="preview-skeleton" *ngIf="loading">
+        <div class="skeleton-preview-header"></div>
+        <div class="skeleton-preview-content">
+          <div class="skeleton-line" *ngFor="let i of [1,2,3,4,5]"></div>
+        </div>
+      </div>
+
+      <div *ngIf="!entries.length && !loading" class="preview-empty">No entries to preview.</div>
+    </div>
   </div>
 </div> 

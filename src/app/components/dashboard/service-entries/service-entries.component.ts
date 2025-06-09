@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, Entry } from '../../../services/api.service';
+import * as YAML from 'yaml';
 
 @Directive({
   selector: 'textarea[autoResize]',
@@ -42,6 +43,9 @@ export class ServiceEntriesComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   isSubmitting: boolean = false;
+  displayFormat: 'key-value' | 'json' | 'yaml' = 'key-value';
+  copySuccess: boolean = false;
+  private copyTimeout: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -116,5 +120,79 @@ export class ServiceEntriesComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/config', this.serviceName, 'profiles']);
+  }
+
+  private createNestedMap(entries: Entry[]): Record<string, any> {
+    const result: Record<string, any> = {};
+    
+    entries.forEach(entry => {
+      const keys = entry.key.split('.');
+      let current = result;
+      
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (i === keys.length - 1) {
+          current[key] = entry.value;
+        } else {
+          current[key] = current[key] || {};
+          current = current[key];
+        }
+      }
+    });
+    
+    return result;
+  }
+
+  getFormattedPreview(): string {
+    switch (this.displayFormat) {
+      case 'json':
+        const jsonObj = this.createNestedMap(this.entries);
+        return JSON.stringify(jsonObj, null, 2);
+      
+      case 'yaml':
+        const yamlObj = this.createNestedMap(this.entries);
+        return YAML.stringify(yamlObj);
+      
+      default:
+        return '';
+    }
+  }
+
+  copyKeyValueContent() {
+    const content = this.entries
+      .map(entry => `${entry.key}=${entry.value}`)
+      .join('\n');
+    
+    this.copyToClipboard(content);
+  }
+
+  copyPreviewContent() {
+    const content = this.getFormattedPreview();
+    this.copyToClipboard(content);
+  }
+
+  private copyToClipboard(content: string) {
+    navigator.clipboard.writeText(content).then(() => {
+      this.copySuccess = true;
+      if (this.copyTimeout) {
+        clearTimeout(this.copyTimeout);
+      }
+      this.copyTimeout = setTimeout(() => {
+        this.copySuccess = false;
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy content:', err);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.copyTimeout) {
+      clearTimeout(this.copyTimeout);
+    }
+  }
+
+  onEntryChange(index: number) {
+    // Trigger change detection to update form
+    this.entries = [...this.entries];
   }
 } 
