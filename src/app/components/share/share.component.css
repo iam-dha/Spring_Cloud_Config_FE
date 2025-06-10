@@ -1,0 +1,263 @@
+.share-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.share-header {
+  margin-bottom: 30px;
+}
+
+.share-header h2 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.share-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.info-item {
+  color: #666;
+}
+
+.info-item strong {
+  color: #333;
+  margin-right: 5px;
+}
+
+.entries-preview-section {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1.5px solid #b2dfdb;
+  box-shadow: 0 4px 24px rgba(33, 144, 110, 0.13);
+  padding: 2rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.preview-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #21906e;
+}
+
+.preview-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.format-selector {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #b2dfdb;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #21906e;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.format-selector:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.preview-copy-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #b2dfdb;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #21906e;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.preview-copy-button:hover {
+  background: #e3f2fd;
+  border-color: #2196F3;
+  color: #2196F3;
+}
+
+.preview-copy-button.copied {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.preview-table-container {
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.preview-table th,
+.preview-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 0.97rem;
+  word-break: break-all;
+}
+
+.preview-table th {
+  background: #e3f2fd;
+  color: #2196F3;
+  font-weight: 600;
+}
+
+.preview-table tr:last-child td {
+  border-bottom: none;
+}
+
+.preview-formatted-container {
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.preview-formatted {
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 500px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.preview-empty {
+  color: #999;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #dc3545;
+  background: #f8d7da;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Loading Skeleton */
+.preview-skeleton {
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  padding: 1rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 400px;
+}
+
+.skeleton-preview-header {
+  height: 1.5rem;
+  width: 30%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.skeleton-line {
+  height: 1rem;
+  width: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-line:nth-child(2) {
+  width: 90%;
+}
+
+.skeleton-line:nth-child(3) {
+  width: 95%;
+}
+
+.skeleton-line:nth-child(4) {
+  width: 85%;
+}
+
+.skeleton-line:nth-child(5) {
+  width: 92%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .share-container {
+    padding: 1rem;
+  }
+
+  .share-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .entries-preview-section {
+    padding: 1rem;
+  }
+
+  .preview-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .preview-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .format-selector,
+  .preview-copy-button {
+    flex: 1;
+  }
+} 

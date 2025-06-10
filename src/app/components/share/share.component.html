@@ -1,0 +1,84 @@
+<div class="share-container">
+  <div class="share-header">
+    <h2>Shared Configuration</h2>
+    <div class="share-info">
+      <span class="info-item">
+        <strong>Account:</strong> {{ config?.account }}
+      </span>
+      <span class="info-item">
+        <strong>Service:</strong> {{ config?.service }}
+      </span>
+      <span class="info-item">
+        <strong>Profile:</strong> {{ config?.profile }}
+      </span>
+      <span class="info-item" *ngIf="config?.lastUpdated">
+        <strong>Last Updated:</strong> {{ config?.lastUpdated | date:'medium' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="share-content">
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="entries-preview-section" *ngIf="config && !errorMessage">
+        <div class="preview-header">
+          <div class="preview-title">Configuration Entries</div>
+          <div class="preview-controls">
+            <button 
+              class="preview-copy-button" 
+              *ngIf="config.entries?.length"
+              (click)="displayFormat === 'key-value' ? copyKeyValueContent() : copyPreviewContent()"
+              [class.copied]="copySuccess">
+              <i class="copy-icon">{{ copySuccess ? '✓' : '📋' }}</i>
+              {{ copySuccess ? 'Copied!' : 'Copy' }}
+            </button>
+            <select class="format-selector" [(ngModel)]="displayFormat">
+              <option value="key-value">Key-Value</option>
+              <option value="json">JSON</option>
+              <option value="yaml">YAML</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="preview-table-container" *ngIf="config.entries?.length && displayFormat === 'key-value'">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of config.entries">
+                <td>{{ entry.key }}</td>
+                <td>{{ entry.value }}</td>
+                <td>{{ entry.type }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="preview-formatted-container" *ngIf="config.entries?.length && displayFormat !== 'key-value'">
+          <pre class="preview-formatted">{{getFormattedPreview()}}</pre>
+        </div>
+
+        <div *ngIf="!config.entries?.length" class="preview-empty">
+          No entries found
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="preview-skeleton">
+        <div class="skeleton-preview-header"></div>
+        <div class="skeleton-preview-content">
+          <div class="skeleton-line" *ngFor="let i of [1,2,3,4,5]"></div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div> 

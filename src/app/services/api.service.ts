@@ -251,4 +251,9 @@ export class ApiService {
       headers: this.getHeaders()
     });
   }
+
+  getSharedConfig(account: string, service: string, profile: string): Observable<ApiResponse<any>> {
+    const url = `${this.baseUrl}/share/${account}/${service}/${profile}`;
+    return this.http.get<ApiResponse<any>>(url, { headers: this.getHeaders() });
+  }
 }
